@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Ultrasonic Sensor Distance</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f2f2f2;
+      margin-top: 100px;
+    }
+    .card {
+      display: inline-block;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .value {
+      font-size: 48px;
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Ultrasonic Sensor Reading</h2>
+    <p class="value" id="distance">-- cm</p>
+  </div>
+
+  <script>
+    async function getData() {
+      try {
+        const response = await fetch("http://192.168.1.100/data"); // Replace with your ESP/Arduino IP
+        const data = await response.json();
+        document.getElementById("distance").innerText = data.distance + " cm";
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    // Update every 1 second
+    setInterval(getData, 1000);
+  </script>
+</body>
+</html>
